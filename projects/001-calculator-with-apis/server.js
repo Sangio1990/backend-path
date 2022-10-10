@@ -10,7 +10,7 @@ app.listen(8000, () => console.log("Server running at 8000"));
 app.get("", (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end('List of possible operations:\n');
+    res.end('This is an API learning server, use postman instead');
 });
 
 //Setting some generic functions
