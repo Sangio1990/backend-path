@@ -15,59 +15,53 @@ app.get("", (req, res) => {
 
 //Setting some generic functions
 function returnNumbers(req) {
-    var body = req.body;
-    var numbers = [];
-    for (let n in body.numbers){
-        numbers.push(parseFloat(body.numbers[n]));
-    }
+    // I'm not handling errors for now, assuming the data given is always an
+    // array of floating numbers, in case here is the place where the error handling happens.
+    let numbers = [];
+    const body = req.body;
+    body.numbers.forEach(num => numbers.push(parseFloat(num)));
     return numbers;
 }
 
 //Setting the APIs
-app.get("/API/sum", (req, res) =>{
-    var total = 0;
-    var numbers = returnNumbers(req);
-    for (let n in numbers){
-        total += numbers[n];
-    }
+app.get("/api/sum", (req, res) =>{
+    const numbers = returnNumbers(req);
+    let total = 0;
+    numbers.forEach(num => total += num);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.end(`The sum total is ${total}`);
 })
 
-app.get("/API/mul", (req, res) => {
-    var total = 1;
-    var numbers = returnNumbers(req)
-    for (let n in numbers){
-        total *= numbers[n];
-    }
+app.get("/api/mul", (req, res) => {
+    const numbers = returnNumbers(req)
+    let total = 1;
+    numbers.forEach(num => total *= num);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.end(`The multiplication total is ${total}`);
 
 })
 
-app.get("/API/div", (req, res)=>{
-    var numbers = returnNumbers(req)
-    var total = numbers[0];
-    for (let n in numbers){
-        if (n != 0){
-            total /= numbers[n];
-        }
-    }
+app.get("/api/div", (req, res)=>{
+    const numbers = returnNumbers(req)
+    let total = numbers[0];
+    numbers.forEach(((num, index) =>{
+        if (index != 0){
+            total /= num
+        }}));;
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.end(`The division total is ${total}`);
 })
 
-app.get("/API/sub", (req, res) => {
-    var numbers = returnNumbers(req)
-    var total = numbers[0];
-    for (let n in numbers){
-        if (n != 0){
-            total -= numbers[n];
-        }
-    }
+app.get("/api/sub", (req, res) => {
+    const numbers = returnNumbers(req)
+    let total = numbers[0];
+    numbers.forEach(((num, index) =>{
+        if (index != 0){
+            total -= num
+        }}));
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.end(`The subtraction total is ${total}`);
